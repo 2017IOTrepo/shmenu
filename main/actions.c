@@ -3,7 +3,7 @@
 //
 
 #include "actions.h"
-#include "constant.h"
+#include "../values/constant.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -13,7 +13,7 @@
 void helpAction() {
     printf("command help:\n");
     for (int i = 0; i < commandNumber; ++i) {
-        printf("%s: %s\n", actions[i].name, actions[i].description);
+        printf("%s: %s\n", actions[i].cmd, actions[i].description);
     }
 }
 
@@ -49,8 +49,6 @@ void pwdAction() {
 }
 
 void helloAction() {
-    char hostname[128];
-    gethostname(hostname, sizeof(hostname));
     printf("hello, %s\n", hostname);
 }
 
@@ -66,6 +64,9 @@ void sysAction() {
         printf("%s", szTest);
     }
     fclose(osFile);
+}
+
+void versionAction() {
 }
 
 void unknownAction() {

@@ -19,6 +19,8 @@ void helpAction();
 
 void quitAction();
 
+void versionAction();
+
 void unknownAction();
 
 #endif//SHMENU_ACTIONS_H
