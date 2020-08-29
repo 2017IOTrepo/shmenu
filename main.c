@@ -13,22 +13,18 @@
 int main() {
     char cmd[CMD_MAX_LEN];
     while (true) {
-        int i = 0;
         updateHostname();
         printf("%s > ", hostname);
         scanf("%s", cmd);
-        for (; i < commandNumber; ++i) {
-            if (!strcmp(cmd, actions[i].cmd)) {
-                printf("%s - %s\n", actions[i].cmd, actions[i].description);
-                if (actions[i].handler != NULL) {
-                    actions[i].handler();
-                }
-                break;
-            }
-        }
-        if (i == commandNumber) {
+
+        ActionMsg *action = findAction(cmd);
+        if (action == NULL) {
             unknownAction();
+            continue;
         }
+        printf("%s - %s\n", action->cmd, action->description);
+        if (action->handler != NULL)
+            action->handler();
     }
 
     return 0;

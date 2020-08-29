@@ -4,6 +4,8 @@
 
 #include "constant.h"
 #include "../main/actions.h"
+#include <stdio.h>
+#include <string.h>
 #include <unistd.h>
 
 int commandNumber = 7;
@@ -22,4 +24,20 @@ char hostname[HOST_NAME_LENGTH];
 
 void updateHostname() {
     gethostname(hostname, HOST_NAME_LENGTH);
+}
+
+ActionMsg *findAction(char *cmd) {
+    for (int i = 0; i < commandNumber; ++i) {
+        if (!strcmp(cmd, actions[i].cmd)) {
+            return &actions[i];
+        }
+    }
+
+    return NULL;
+}
+
+void showAllActions() {
+    for (int i = 0; i < commandNumber; ++i) {
+        printf("%s: %s\n", actions[i].cmd, actions[i].description);
+    }
 }

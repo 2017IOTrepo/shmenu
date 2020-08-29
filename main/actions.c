@@ -12,9 +12,7 @@
 
 void helpAction() {
     printf("command help:\n");
-    for (int i = 0; i < commandNumber; ++i) {
-        printf("%s: %s\n", actions[i].cmd, actions[i].description);
-    }
+    showAllActions();
 }
 
 void quitAction() {

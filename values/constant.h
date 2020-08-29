@@ -25,4 +25,8 @@ extern char hostname[]; // 主机名
 
 void updateHostname();
 
+ActionMsg *findAction(char *cmd);
+
+void showAllActions();
+
 #endif//SHMENU_CONSTANT_H
