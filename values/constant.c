@@ -35,9 +35,3 @@ ActionMsg *findAction(char *cmd) {
 
     return NULL;
 }
-
-void showAllActions() {
-    for (int i = 0; i < commandNumber; ++i) {
-        printf("%s: %s\n", actions[i].cmd, actions[i].description);
-    }
-}

@@ -85,13 +85,13 @@ int deleteLinkedListNode(tLinkedList *pLinkedList, tLinkedListNode *pNode) {
 
     return FAILURE;
 }
-tLinkedListNode *findLinkedListNode(tLinkedList *pLinkedList, int (*condition)(tLinkedListNode *)) {
+tLinkedListNode *findLinkedListNode(tLinkedList *pLinkedList, int (*condition)(tLinkedListNode *, void *args), void *args) {
     if (pLinkedList == NULL || condition == NULL) {
         return NULL;
     }
     tLinkedListNode *tmp = pLinkedList->head;
     while (tmp != pLinkedList->tail) {
-        if (condition(tmp) == SUCCESS) {
+        if (condition(tmp, args) == SUCCESS) {
             return tmp;
         }
     }

@@ -8,6 +8,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "ds/linkedlist.h"
+
 #define CMD_MAX_LEN 128
 
 int main() {

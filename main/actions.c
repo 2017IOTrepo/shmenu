@@ -10,6 +10,12 @@
 #include <time.h>
 #include <unistd.h>
 
+void showAllActions() {
+    for (int i = 0; i < commandNumber; ++i) {
+        printf("%s: %s\n", actions[i].cmd, actions[i].description);
+    }
+}
+
 void helpAction() {
     printf("command help:\n");
     showAllActions();

@@ -22,7 +22,7 @@ int addLinkedListNode(tLinkedList *pLinkedList, tLinkedListNode *pNode);
 
 int deleteLinkedListNode(tLinkedList *pLinkedList, tLinkedListNode *pNode);
 
-tLinkedListNode *findLinkedListNode(tLinkedList *pLinkedList, int condition(tLinkedListNode *pNode));
+tLinkedListNode *findLinkedListNode(tLinkedList *pLinkedList, int condition(tLinkedListNode *pNode, void *args), void *args);
 
 tLinkedListNode *getLinkedListHead(tLinkedList *pLinkedList);
 

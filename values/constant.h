@@ -9,13 +9,12 @@
 #define DESCRIPTION_NUMBER 128
 #define HOST_NAME_LENGTH 128
 
-struct _ActionMsg {
+typedef struct _ActionMsg {
     char cmd[NAME_NUMBER];
     char description[DESCRIPTION_NUMBER];
     int (*handler)();
-};
 
-typedef struct _ActionMsg ActionMsg;
+} ActionMsg;
 
 extern ActionMsg actions[];
 
@@ -26,7 +25,5 @@ extern char hostname[];// 主机名
 void updateHostname();
 
 ActionMsg *findAction(char *cmd);
-
-void showAllActions();
 
 #endif//SHMENU_CONSTANT_H
