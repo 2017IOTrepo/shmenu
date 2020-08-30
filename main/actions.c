@@ -3,22 +3,16 @@
 //
 
 #include "actions.h"
-#include "../values/constant.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
 #include <unistd.h>
 
-void showAllActions() {
-    for (int i = 0; i < commandNumber; ++i) {
-        printf("%s: %s\n", actions[i].cmd, actions[i].description);
-    }
-}
+#define HOST_NAME_LENGTH 128
 
 void helpAction() {
     printf("command help:\n");
-    showAllActions();
 }
 
 void quitAction() {
@@ -53,6 +47,8 @@ void pwdAction() {
 }
 
 void helloAction() {
+    char hostname[HOST_NAME_LENGTH];
+    gethostname(hostname, HOST_NAME_LENGTH);
     printf("hello, %s\n", hostname);
 }
 
