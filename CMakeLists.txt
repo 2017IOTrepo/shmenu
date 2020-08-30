@@ -3,4 +3,4 @@ project(shmenu C)
 
 set(CMAKE_C_STANDARD 11)
 
-add_executable(shmenu main.c main/actions.c main/actions.h ds/map.c ds/map.h values/constant.c values/constant.h ds/linkedlist.c ds/linkedlist.h)
+add_executable(shmenu main.c main/actions.c main/actions.h ds/map.c ds/map.h values/constant.c values/constant.h ds/linkedlist.c ds/linkedlist.h main/menu.c main/menu.h)

@@ -9,7 +9,7 @@
 struct _LinkedList {
     tLinkedListNode *head;
     tLinkedListNode *tail;
-    int size;
+    int              size;
 };
 
 tLinkedList *createLinkedList() {
@@ -28,7 +28,93 @@ int deleteLinkedList(tLinkedList *pLinkedList) {
         return FAILURE;
     }
     while (pLinkedList->head != NULL) {
+        tLinkedListNode *tmp = pLinkedList->head;
+        pLinkedList->head    = pLinkedList->head->next;
+        pLinkedList->size -= 1;
+        free(tmp);
+    }
+    pLinkedList->head = NULL;
+    pLinkedList->tail = NULL;
+    pLinkedList->size = 0;
+    free(pLinkedList);
+    return SUCCESS;
+}
+
+int addLinkedListNode(tLinkedList *pLinkedList, tLinkedListNode *pNode) {
+    if (pLinkedList == NULL || pNode == NULL) {
+        return FAILURE;
+    }
+    pNode->next = NULL;
+    if (pLinkedList->head == NULL) {
+        pLinkedList->head = pNode;
+    }
+    if (pLinkedList->tail == NULL) {
+        pLinkedList->tail = pNode;
+    } else {
+        pLinkedList->tail->next = pNode;
+        pLinkedList->tail       = pNode;
+    }
+    pLinkedList->size += 1;
+    return SUCCESS;
+}
+
+int deleteLinkedListNode(tLinkedList *pLinkedList, tLinkedListNode *pNode) {
+    if (pLinkedList == NULL || pNode == NULL) {
+        return FAILURE;
+    }
+    if (pLinkedList->head == pNode) {
+        pLinkedList->head = pLinkedList->head->next;
+        pLinkedList->size -= 1;
+        if (pLinkedList->size == 0) {
+            pLinkedList->tail = NULL;
+        }
+        return SUCCESS;
+    }
+    tLinkedListNode *tmp = pLinkedList->head;
+    while (tmp != NULL) {
+        if (tmp->next == pNode) {
+            tmp->next = pNode->next->next;
+            pLinkedList->size -= 1;
+            if (pLinkedList->size == 0) {
+                pLinkedList->tail = NULL;
+            }
+            return SUCCESS;
+        }
+        tmp = tmp->next;
     }
 
-    return SUCCESS;
+    return FAILURE;
+}
+tLinkedListNode *findLinkedListNode(tLinkedList *pLinkedList, int (*condition)(tLinkedListNode *)) {
+    if (pLinkedList == NULL || condition == NULL) {
+        return NULL;
+    }
+    tLinkedListNode *tmp = pLinkedList->head;
+    while (tmp != pLinkedList->tail) {
+        if (condition(tmp) == SUCCESS) {
+            return tmp;
+        }
+    }
+    return NULL;
+}
+
+tLinkedListNode *getLinkedListHead(tLinkedList *pLinkedList) {
+    if (pLinkedList == NULL)
+        return NULL;
+
+    return pLinkedList->head;
+}
+
+tLinkedListNode *getNextLinkedListNode(tLinkedList *pLinkedList, tLinkedListNode *pNode) {
+    if (pLinkedList == NULL || pNode == NULL) {
+        return NULL;
+    }
+    tLinkedListNode *pTempNode = pLinkedList->head;
+    while (pTempNode != NULL) {
+        if (pTempNode == pNode) {
+            return pTempNode->next;
+        }
+        pTempNode = pTempNode->next;
+    }
+    return NULL;
 }

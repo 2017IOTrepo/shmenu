@@ -21,7 +21,7 @@ extern ActionMsg actions[];
 
 extern int commandNumber;
 
-extern char hostname[]; // 主机名
+extern char hostname[];// 主机名
 
 void updateHostname();
 

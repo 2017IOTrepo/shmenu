@@ -26,7 +26,7 @@ void dateAction() {
 }
 
 void randomAction() {
-    int seed = 0;
+    int seed     = 0;
     int maxValue = 1;
     printf("please enter a seed value\n");
     scanf("%d", &seed);
