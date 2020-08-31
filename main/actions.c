@@ -11,10 +11,6 @@
 
 #define HOST_NAME_LENGTH 128
 
-void helpAction() {
-    printf("command help:\n");
-}
-
 void quitAction() {
     exit(0);
 }

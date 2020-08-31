@@ -90,10 +90,11 @@ tLinkedListNode *findLinkedListNode(tLinkedList *pLinkedList, int (*condition)(t
         return NULL;
     }
     tLinkedListNode *tmp = pLinkedList->head;
-    while (tmp != pLinkedList->tail) {
+    while (tmp != NULL) {
         if (condition(tmp, args) == SUCCESS) {
             return tmp;
         }
+        tmp = tmp->next;
     }
     return NULL;
 }

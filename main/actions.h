@@ -15,8 +15,6 @@ void helloAction();
 
 void sysAction();
 
-void helpAction();
-
 void quitAction();
 
 void versionAction();

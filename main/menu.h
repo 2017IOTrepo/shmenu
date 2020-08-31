@@ -9,6 +9,8 @@ int addMenuItem(char *cmd, char *description, int (*handler)());
 
 int setPrompt(char *str);
 
+int setUnknownCommand(char *str);
+
 int executeMenu();
 
 #endif//SHMENU_MENU_H
