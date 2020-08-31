@@ -9,7 +9,7 @@ int addMenuItem(char *cmd, char *description, int (*handler)());
 
 int setPrompt(char *str);
 
-int setUnknownCommand(char *str);
+int setUnknownCommandCallback(int (*_unknownCommandHandler)());
 
 int executeMenu();
 

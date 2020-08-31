@@ -13,7 +13,7 @@ int main() {
     addMenuItem("hello", "say hello to you", helloAction);
     addMenuItem("sys", "tell you system messages", sysAction);
     addMenuItem("version", "menu v3.0", versionAction);
-    setUnknownCommand("Unknown command!\nPlease enter 'help' to get help.");
+    setUnknownCommandCallback(unknownAction);
     executeMenu();
     return 0;
 }

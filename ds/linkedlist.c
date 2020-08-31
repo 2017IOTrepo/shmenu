@@ -3,6 +3,7 @@
 //
 
 #include "linkedlist.h"
+#include <pthread.h>
 #include <stddef.h>
 #include <stdlib.h>
 
@@ -10,6 +11,7 @@ struct _LinkedList {
     tLinkedListNode *head;
     tLinkedListNode *tail;
     int              size;
+    pthread_mutex_t  mutex;
 };
 
 tLinkedList *createLinkedList() {
@@ -20,6 +22,7 @@ tLinkedList *createLinkedList() {
     pLinkedList->head = NULL;
     pLinkedList->tail = NULL;
     pLinkedList->size = 0;
+    pthread_mutex_init(&(pLinkedList->mutex), NULL);
     return pLinkedList;
 }
 
@@ -29,13 +32,16 @@ int deleteLinkedList(tLinkedList *pLinkedList) {
     }
     while (pLinkedList->head != NULL) {
         tLinkedListNode *tmp = pLinkedList->head;
-        pLinkedList->head    = pLinkedList->head->next;
+        pthread_mutex_lock(&(pLinkedList->mutex));
+        pLinkedList->head = pLinkedList->head->next;
         pLinkedList->size -= 1;
+        pthread_mutex_unlock(&(pLinkedList->mutex));
         free(tmp);
     }
     pLinkedList->head = NULL;
     pLinkedList->tail = NULL;
     pLinkedList->size = 0;
+    pthread_mutex_destroy(&(pLinkedList->mutex));
     free(pLinkedList);
     return SUCCESS;
 }
@@ -45,6 +51,7 @@ int addLinkedListNode(tLinkedList *pLinkedList, tLinkedListNode *pNode) {
         return FAILURE;
     }
     pNode->next = NULL;
+    pthread_mutex_lock(&(pLinkedList->mutex));
     if (pLinkedList->head == NULL) {
         pLinkedList->head = pNode;
     }
@@ -55,6 +62,7 @@ int addLinkedListNode(tLinkedList *pLinkedList, tLinkedListNode *pNode) {
         pLinkedList->tail       = pNode;
     }
     pLinkedList->size += 1;
+    pthread_mutex_unlock(&(pLinkedList->mutex));
     return SUCCESS;
 }
 
@@ -62,12 +70,14 @@ int deleteLinkedListNode(tLinkedList *pLinkedList, tLinkedListNode *pNode) {
     if (pLinkedList == NULL || pNode == NULL) {
         return FAILURE;
     }
+    pthread_mutex_lock(&(pLinkedList->mutex));
     if (pLinkedList->head == pNode) {
         pLinkedList->head = pLinkedList->head->next;
         pLinkedList->size -= 1;
         if (pLinkedList->size == 0) {
             pLinkedList->tail = NULL;
         }
+        pthread_mutex_unlock(&(pLinkedList->mutex));
         return SUCCESS;
     }
     tLinkedListNode *tmp = pLinkedList->head;
@@ -78,11 +88,12 @@ int deleteLinkedListNode(tLinkedList *pLinkedList, tLinkedListNode *pNode) {
             if (pLinkedList->size == 0) {
                 pLinkedList->tail = NULL;
             }
+            pthread_mutex_unlock(&(pLinkedList->mutex));
             return SUCCESS;
         }
         tmp = tmp->next;
     }
-
+    pthread_mutex_unlock(&(pLinkedList->mutex));
     return FAILURE;
 }
 tLinkedListNode *findLinkedListNode(tLinkedList *pLinkedList, int (*condition)(tLinkedListNode *, void *args), void *args) {

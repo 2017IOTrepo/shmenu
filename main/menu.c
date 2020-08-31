@@ -12,11 +12,15 @@
 
 #define CMD_MAX_LEN 32
 #define DESCRIPTION_MAX_LEN 128
-#define UNKNOWN_CMD_LEN 32
 
-char         unknownCmd[UNKNOWN_CMD_LEN] = "unknown command";
-char         prompt[CMD_MAX_LEN]         = "Cmd > ";
-tLinkedList *listHead                    = NULL;
+int defaultUnknownCommandCallback() {
+    printf("unknown command\n");
+    return 1;
+}
+
+char         prompt[CMD_MAX_LEN]                     = "Cmd > ";
+tLinkedList *listHead                                = NULL;
+int (*unknownCommandHandler)(int argc, char *argv[]) = defaultUnknownCommandCallback;
 
 typedef struct _ActionMsgNode {
     // 这里必须放在第一个，不然会强转失败
@@ -47,10 +51,8 @@ int setPrompt(char *str) {
     return 1;
 }
 
-int setUnknownCommand(char *str) {
-    if (str == NULL)
-        return 0;
-    strcpy(unknownCmd, str);
+int setUnknownCommandCallback(int (*_unknownCommandHandler)()) {
+    unknownCommandHandler = _unknownCommandHandler;
     return 1;
 }
 
@@ -81,6 +83,7 @@ int executeMenu() {
     while (true) {
         char  cmd[CMD_MAX_LEN];
         char *pcmd = NULL;
+        printf("%s", prompt);
         scanf("%s", cmd);
         //        pcmd = fgets(cmd, CMD_MAX_LEN, stdin);
         //        if (pcmd == NULL) {
@@ -88,7 +91,7 @@ int executeMenu() {
         //        }
         tActionMsgNode *pNode = (tActionMsgNode *) findLinkedListNode(listHead, condition, cmd);
         if (pNode == NULL) {
-            printf("%s\n", unknownCmd);
+            unknownCommandHandler(0, NULL);
             continue;
         }
 

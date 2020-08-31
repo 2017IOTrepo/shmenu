@@ -66,5 +66,5 @@ void versionAction() {
 }
 
 void unknownAction() {
-    printf("Unknown command\n");
+    printf("Unknown command!\nPlease enter 'help' to get help.\n");
 }
