@@ -19,11 +19,12 @@ char         prompt[CMD_MAX_LEN]         = "Cmd > ";
 tLinkedList *listHead                    = NULL;
 
 typedef struct _ActionMsgNode {
-    char *cmd;
-    char *description;
+    // 这里必须放在第一个，不然会强转失败
+    tLinkedListNode *next;
+    char *           cmd;
+    char *           description;
     // 命令可能会有参数，所以函数需要添加argc argv
     int (*handler)(int argc, char *argv[]);
-    tLinkedListNode *next;
 } tActionMsgNode;
 
 int addMenuItem(char *cmd, char *description, int (*handler)()) {
@@ -80,12 +81,12 @@ int executeMenu() {
     while (true) {
         char  cmd[CMD_MAX_LEN];
         char *pcmd = NULL;
-
-        pcmd = fgets(cmd, CMD_MAX_LEN, stdin);
-        if (pcmd == NULL) {
-            continue;
-        }
-        tActionMsgNode *pNode = (tActionMsgNode *) findLinkedListNode(listHead, condition, pcmd);
+        scanf("%s", cmd);
+        //        pcmd = fgets(cmd, CMD_MAX_LEN, stdin);
+        //        if (pcmd == NULL) {
+        //            continue;
+        //        }
+        tActionMsgNode *pNode = (tActionMsgNode *) findLinkedListNode(listHead, condition, cmd);
         if (pNode == NULL) {
             printf("%s\n", unknownCmd);
             continue;
