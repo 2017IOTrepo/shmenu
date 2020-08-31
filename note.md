@@ -81,3 +81,26 @@
 - 函数调用堆栈
 
 - 全局变量是典型的线程之间共享的资源
+
+## CP8
+
+几种不同的质量视角
+
+- 产品的视角（内部质量）
+- 用户的视角——是不是对用户有帮助
+- 商业上下文的质量——投资回报和驱动力问题
+- 运营推广也是一个关键
+- 将menu开源希望有人使用它
+
+设计方法论
+
+- 不断地重构
+
+几个重要的设计指导原则
+
+- Modularity
+- Interfaces
+- Information  hiding
+- Incremental  development
+- Abstraction
+- Generality

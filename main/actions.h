@@ -7,7 +7,7 @@
 
 void dateAction();
 
-void randomAction();
+void randomAction(int argc, char *argv[]);
 
 void pwdAction();
 

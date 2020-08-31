@@ -12,7 +12,7 @@ int main() {
     addMenuItem("pwd", "show your now directory", pwdAction);
     addMenuItem("hello", "say hello to you", helloAction);
     addMenuItem("sys", "tell you system messages", sysAction);
-    addMenuItem("version", "menu v3.0", versionAction);
+    addMenuItem("version", "menu v5.0", versionAction);
     setUnknownCommandCallback(unknownAction);
     executeMenu();
     return 0;

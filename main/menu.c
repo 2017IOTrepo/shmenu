@@ -10,8 +10,9 @@
 #include <string.h>
 #include <unistd.h>
 
-#define CMD_MAX_LEN 32
+#define CMD_MAX_LEN 128
 #define DESCRIPTION_MAX_LEN 128
+#define CMD_MAX_ARGV_NUM 32
 
 int defaultUnknownCommandCallback() {
     printf("unknown command\n");
@@ -83,21 +84,32 @@ int executeMenu() {
     while (true) {
         char  cmd[CMD_MAX_LEN];
         char *pcmd = NULL;
+        int   argc = 0;
+        char *argv[CMD_MAX_ARGV_NUM];
         printf("%s", prompt);
-        scanf("%s", cmd);
-        //        pcmd = fgets(cmd, CMD_MAX_LEN, stdin);
-        //        if (pcmd == NULL) {
-        //            continue;
-        //        }
-        tActionMsgNode *pNode = (tActionMsgNode *) findLinkedListNode(listHead, condition, cmd);
+        // 防止缓冲区溢出
+        pcmd = fgets(cmd, CMD_MAX_LEN, stdin);
+        if (pcmd == NULL) {
+            continue;
+        }
+
+        pcmd = strtok(pcmd, " ");
+        while (pcmd != NULL && argc < CMD_MAX_ARGV_NUM) {
+            argv[argc++] = pcmd;
+            pcmd         = strtok(NULL, " ");
+        }
+
+        // 去除'\n'
+        argv[argc - 1][strlen(argv[argc - 1]) - 1] = '\0';
+        tActionMsgNode *pNode                      = (tActionMsgNode *) findLinkedListNode(listHead, condition, argv[0]);
         if (pNode == NULL) {
-            unknownCommandHandler(0, NULL);
+            unknownCommandHandler(argc, argv);
             continue;
         }
 
         printf("%s - %s\n", pNode->cmd, pNode->description);
         if (pNode->handler != NULL) {
-            pNode->handler(0, NULL);
+            pNode->handler(argc, argv);
         }
     }
 

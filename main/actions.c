@@ -3,6 +3,7 @@
 //
 
 #include "actions.h"
+#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -21,14 +22,35 @@ void dateAction() {
     printf("now time is : %s\n", ctime(&now));
 }
 
-void randomAction() {
-    int seed     = 0;
-    int maxValue = 1;
-    printf("please enter a seed value\n");
-    scanf("%d", &seed);
+void randomAction(int argc, char *argv[]) {
+    bool s        = false;
+    bool m        = false;
+    int  seed     = 0;
+    int  maxValue = 1;
+
+    if (argc > 1) {
+        for (int i = 1; i < argc; ++i) {
+            if (!strcmp(argv[i], "-s") || !strcmp(argv[i], "--seed")) {
+                seed = atoi(argv[++i]);
+                s    = true;
+            } else if (!strcmp(argv[i], "-m") || !strcmp(argv[i], "--max")) {
+                maxValue = atoi(argv[++i]);
+                m        = true;
+            }
+        }
+    }
+
+    if (!s) {
+        printf("please enter a seed value\n");
+        scanf("%d", &seed);
+        getchar();
+    }
+    if (!m) {
+        printf("please enter the max value\n");
+        scanf("%d", &maxValue);
+        getchar();
+    }
     srand(seed);
-    printf("please enter the max value\n");
-    scanf("%d", &maxValue);
     printf("rand answer is: %d\n", rand() % maxValue);
 }
 

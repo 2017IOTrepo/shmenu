@@ -96,6 +96,7 @@ int deleteLinkedListNode(tLinkedList *pLinkedList, tLinkedListNode *pNode) {
     pthread_mutex_unlock(&(pLinkedList->mutex));
     return FAILURE;
 }
+
 tLinkedListNode *findLinkedListNode(tLinkedList *pLinkedList, int (*condition)(tLinkedListNode *, void *args), void *args) {
     if (pLinkedList == NULL || condition == NULL) {
         return NULL;
